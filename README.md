@@ -1,5 +1,5 @@
 # Zed_len
-Estimar o comprimento de objetos usando a camera zed, utilizando de triangulações e o Teorema de Pitágoras
+Estimar o comprimento de objetos usando a camera zed, a partir de triangulações e o Teorema de Pitágoras
 
 Para melhor precisão, é recomendado que o objeto esteja em um local bem iluminado e que fique centralizado com distancia
 de 20 a 50 centimetros em relação a câmera. 
