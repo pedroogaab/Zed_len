@@ -1,12 +1,10 @@
 #!../ZedVenv/bin/python
 
 import os
-
 import cv2
 import matplotlib.pyplot as plt
 import pyzed.sl as sl
 import numpy as np
-
 
 class ZedDetector:
     def electronic_detect():
@@ -61,17 +59,14 @@ class ZedDetector:
         objects = sl.Objects()
         image_camera = sl.Mat()
         depth_map = sl.Mat()
-
         key = None
-
         colors = [(225,64,101),(0,145,242),(76,220,105),(34,34,252),(186,85,159),(26,78,118),(207,45,239),(107,107,107),(109,212,212),(232,220,116)]
 
         # Dicionário aonde será armazenado os tempos de entrada
         # e saida de cada objeto.
         obj_id = {}
-
         # ========================================================================================================
-        
+
         while True:
 
             status = camera.grab(runtime)
@@ -100,12 +95,9 @@ class ZedDetector:
                     start_points = (int(coordinates[0][0]), int(coordinates[0][1]))
                     end_points = (int(coordinates[2][0]), int(coordinates[2][1]))
 
-
                     cord_top = int((coordinates[0][0]+coordinates[1][0])/2)
                     cord_bot = int((coordinates[3][0]+coordinates[2][0])/2)
                     ponto_m = int((coordinates[0][1]+coordinates[3][1])/2)
-
-
 
                     info_points_x = (
                         int(coordinates[0][0]) - 4,
@@ -141,15 +133,12 @@ class ZedDetector:
                     ponto_mid = (cord_bot,ponto_m)
                     ponto_bot = (cord_bot, int(coordinates[2][1]))
 
-                    
                     dist_top = depth_map.get_value(ponto_top[0], ponto_top[1])[1]
                     dist_mid = depth_map.get_value(ponto_mid[0], ponto_mid[1])[1]
                     dist_bot = depth_map.get_value(ponto_bot[0], ponto_bot[1])[1]
 
-
                     cv2.circle(frame, ponto_top, 7,(50,255,0),-1)
                     cv2.circle(frame, ponto_bot, 7,(50,255,0),-1)
-
 
                     try:
                         h1 = (dist_top**2-dist_mid**2)**(1/2)
@@ -166,18 +155,15 @@ class ZedDetector:
 
             cv2.imshow("Screen", frame)
             # -----------------------------------------------------------
-
             key = cv2.waitKey(1)
             if key == ord("q"):
                 break
-
         # ========================================================================================================
         camera.disable_object_detection()
         camera.disable_positional_tracking()
         camera.close()
         # -----------------------------------------------------------
         return obj_id
-
 if __name__ == "__main__":
     data = ZedDetector.electronic_detect()
     os.system("clear")
